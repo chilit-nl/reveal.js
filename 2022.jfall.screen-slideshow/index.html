@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="../dist/reset.css">
+    <link rel="stylesheet" href="../dist/reveal.css">
+    <link rel="stylesheet" href="../dist/theme/chilit-dark-no-logo.css">
+    <!--		<link rel="stylesheet" href="dist/theme/chilit-light.css">-->
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+</head>
+<body>
+<!--<iframe src="https://chilit.nl" style="position: absolute; top: 0; left: 0; height: 200px; width: 100%; z-index: 99999"></iframe>-->
+<!--<div class="reveal" style="margin-top: 200px; height: calc(100% - 200px);">-->
+<iframe src="https://challenge-admin.chilit.nl/overview" scrolling="no" style="position: absolute; top: 0; right: 0; width: 608px; height: 100%; z-index: 99999; border: none"></iframe>
+<div class="reveal" style="margin-right: 608px; width: calc(100% - 608px);">
+    <div class="slides">
+        <section
+            data-background-size="contain"
+            data-background="Slide-1.png">
+        </section>
+    </div>
+</div>
+
+<script src="../dist/reveal.js"></script>
+<script src="../plugin/notes/notes.js"></script>
+<script src="../plugin/markdown/markdown.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+<script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.initialize({
+        autoSlide: 10000,
+        loop: true,
+        hash: true,
+        transition: 'fade',
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+    });
+    Reveal.addEventListener("ready", function addFragmentToLists() {
+        for (const listItem of document.querySelectorAll(".fragmented-lists li")) {
+            listItem.classList.add("fragment");
+        }
+    });
+</script>
+</body>
+</html>
