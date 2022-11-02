@@ -13,7 +13,7 @@ What's new?
   <div style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
     <div>
       Lennart ten Wolde<br />
-      Software Engineer, ChilIT
+      Software Engineer, CHILIT
     </div>
     <div style="margin-top: 50px">
       KPN IoT<br/>
@@ -49,7 +49,7 @@ What's new?
 <!-- .slide: class="fragmented-lists" -->
 - Dropped support for Java 8 and 11
 - Removal of `java.se.ee`
-- Dependency compatability
+- Dependency compatibility
 
 --
 
@@ -94,6 +94,10 @@ public interface TodoClient {
     void postTodo(@PathVariable String project, @RequestBody Todo todo);
 }
 ```
+
+Note:
+Similar to OpenFeign
+More aligned with spring terminology
 
 --
 
@@ -524,14 +528,14 @@ Optimizing your java bytecode for static analysis
 
 Building:
 ```bash
-mvn -Pnative package
+mvn -Pnative spring-boot:build-image
 # OR
-gradle nativeCompile
+gradle bootBuildImage
 ```
 
 Running:
 ```bash
-./target/demo-spring-app
+docker run --rm docker.io/library/demo-spring-app:VERSION
 ```
 
 ---
