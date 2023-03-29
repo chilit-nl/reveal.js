@@ -550,3 +550,7 @@ Live demonstration
 <!-- .slide: class="fragmented-lists" -->
 - Please rate my session in the app
 - Visit our ChilIT stand
+
+---
+
+![](./bg-final.png)

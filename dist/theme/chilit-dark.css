@@ -360,8 +360,8 @@ body:before {
   line-height: 60px;
   width: 60px;
   height: 60px;
-  bottom: 12px;
-  left: 12px;
+  bottom: 24px;
+  left: 24px;
   z-index: 1;
 }
 
@@ -376,7 +376,7 @@ body:after {
   font-size: 34px;
   font-weight: 800;
   position: fixed;
-  bottom: 22.5px;
-  left: 85.5px;
+  bottom: 34.5px;
+  left: 97.5px;
   letter-spacing: 6px;
 }
