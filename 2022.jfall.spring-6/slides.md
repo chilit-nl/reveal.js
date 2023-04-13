@@ -1,7 +1,3 @@
-<!-- .slide: data-background-image="jfall_intro.png" -->
-
----
-
 ## Spring Boot 3 / Spring 6 <!-- .element: style="margin-bottom: 300px" -->
 What's new?
 <!-- .slide: data-background-image="pexels-lenin-estrada-2569997.jpg" -->
@@ -28,11 +24,11 @@ What's new?
 
 <!-- .slide: class="fragmented-lists" -->
 - Breaking changes
-- HTTP interface client
+- Migrating **your** project
+- Native image support with GraalVM
 - RFC 7807 problem details
 - Observability
-- Native image support with GraalVM
-- Migrating **your** project
+- HTTP interface client
 
 ---
 
@@ -63,71 +59,111 @@ What's new?
 
 --
 
-# The Good Stuff <!-- .element: style="margin-top: -200px; color: white;" -->
-<!-- .slide: data-background-image="pexels-nina-uhlikova-725255.jpg" data-auto-animate -->
+---
+
+## Migrating
+
+Automatically rewriting your code with OpenRewrite using Spring Boot Migrator.
 
 --
 
-# The Good Stuff <!-- .element: style="margin-top: 0; color: green;" -->
-<!-- .slide: data-background-image="pexels-nina-uhlikova-725255.jpg" data-auto-animate -->
+<iframe width="640" height="480" src="https://www.youtube.com/embed/RKXblzn8lFg" title="Spring Boot 3 Upgrade Report and migration with Spring Boot Migrator" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ---
 
-## Java interface clients
+## Native image support
+With GraalVM
+
+--
+
+### Background
+
+![](./hotspot.png) <!-- .element: height="500" -->
+
+--
+
+### Native image
+
+![](./substrate.png) <!-- .element: height="500" -->
+
+--
+
+### Ahead of Time
+
+Doing as much as possible ahead of (run)time
+<!-- .slide: class="fragmented-lists" -->
+- Generating machine code
+- Generating initializer code
+- Other startup bottlenecks
+
+--
+
+### GraalVM
 
 <!-- .slide: class="fragmented-lists" -->
-- Define an interface for a HTTP API
-- Spring implements it for you (like Data Repositories)
-- Use with WebFlux WebClient backend
-- Blocking and non-blocking
+Java VM based on HotSpot/OpenJDK
+- Supports Ahead-of-time (AOT) complilation
+  - Finds reachable code through agressive static analysis
+  - Compiles java bytecode to native executable
+  - Create native images
+- Unreachable code is not compiled
 
 --
 
-### Defining the interface
+### Spring AOT Engine
 
-```java
-public interface TodoClient {
-    @GetExchange("/todos/{project}")
-    List<Todo> getTodos(@PathVariable String project);
+Optimizing your java bytecode for static analysis
+<!-- .slide: class="fragmented-lists" -->
+- Integrated in build tools (maven/gradle)
+- Analyzing your application context
+- Generating code to manually reconstruct context
+- Without runtime classpath scanning
 
-    @PostExchange("/todos/{project}")
-    void postTodo(@PathVariable String project, @RequestBody Todo todo);
-}
+--
+
+### Why native?
+
+<!-- .slide: class="fragmented-lists" -->
+- Lower memory footprint
+- Fast startup
+  - Under 0.1 seconds
+  - More agressive auto-scaling
+  - Scale down to zero*
+
+--
+
+### Are jars being replaced?
+
+<!-- .slide: class="fragmented-lists" -->
+- No
+- Native executable do not **replace** JVM apps
+- They extend the number use-cases for spring
+
+--
+
+### Is it ready?
+
+<!-- .slide: class="fragmented-lists" -->
+- Yes!
+- No additional configuration needed
+  - In most cases
+- Public repository with reachability data
+- Tooling will only improve going forward
+
+---
+
+### Building a native image
+
+Building:
+```bash
+mvn -Pnative spring-boot:build-image
+# OR
+gradle bootBuildImage
 ```
 
-Note:
-Similar to OpenFeign
-More aligned with spring terminology
-
---
-
-### Configuring the client
-```java [1-8|10-13]
-@Bean
-public HttpServiceProxyFactory httpServiceProxyFactory(
-    WebClient.Builder webClientBuilder
-) {
-    WebClient webClient = webClientBuilder.baseUrl("http://localhost:8080")
-        .build();
-    return new HttpServiceProxyFactory(WebClientAdapter.forClient(webClient));
-}
-
-@Bean
-public TodoClient todoClient(HttpServiceProxyFactory httpServiceProxyFactory) {
-    return httpServiceProxyFactory.createClient(TodoClient.class);
-}
-```
-
---
-
-### Using the client
-```java
-@Autowired
-private TodoClient todoClient;
-
-public void useClient() {
-  todoClient.postTodo("chores", new Todo("Clean the bathroom", false));
-}
+Running:
+```bash
+docker run --rm docker.io/library/demo-spring-app:VERSION
 ```
 
 ---
@@ -443,105 +479,62 @@ Note:
 
 ---
 
-## Native image support
-With GraalVM
-
---
-
-### Background
-
-![](./HotSpot.drawio.png)
-
---
-
-### Native image
-
-![](./Substrate.drawio.png)
-
---
-
-### Ahead of Time
-
-Doing as much as possible ahead of (run)time
-<!-- .slide: class="fragmented-lists" -->
-- Generating machine code
-- Generating initializer code
-- Other startup bottlenecks
-
----
-
-### GraalVM
+## Java interface clients
 
 <!-- .slide: class="fragmented-lists" -->
-Java VM based on HotSpot/OpenJDK
-- Supports Ahead-of-time (AOT) complilation
-  - Finds reachable code through agressive static analysis
-  - Compiles java bytecode to native executable
-  - Create native images
-- Unreachable code is not compiled
+- Define an interface for a HTTP API
+- Spring implements it for you (like Data Repositories)
+- Use with WebFlux WebClient backend
+- Blocking and non-blocking
 
 --
 
-### Spring AOT Engine
+### Defining the interface
 
-Optimizing your java bytecode for static analysis
-<!-- .slide: class="fragmented-lists" -->
-- Integrated in build tools (maven/gradle)
-- Analyzing your application context
-- Generating code to manually reconstruct context
-- Without runtime classpath scanning
+```java
+public interface TodoClient {
+    @GetExchange("/todos/{project}")
+    List<Todo> getTodos(@PathVariable String project);
 
---
-
-### Why native?
-
-<!-- .slide: class="fragmented-lists" -->
-- Lower memory footprint
-- Fast startup
-  - Under 0.1 seconds
-  - More agressive auto-scaling
-  - Scale down to zero*
-
---
-
-### Are jars being replaced?
-
-<!-- .slide: class="fragmented-lists" -->
-- No
-- Native executable do not **replace** JVM apps
-- They extend the number use-cases for spring
-
---
-
-### Is it ready?
-
-<!-- .slide: class="fragmented-lists" -->
-- Yes!
-- No additional configuration needed
-  - In most cases
-- Public repository with reachability data
-- Tooling will only improve going forward
-
---
-
-### Building a native image
-
-Building:
-```bash
-mvn -Pnative spring-boot:build-image
-# OR
-gradle bootBuildImage
+    @PostExchange("/todos/{project}")
+    void postTodo(@PathVariable String project, @RequestBody Todo todo);
+}
 ```
 
-Running:
-```bash
-docker run --rm docker.io/library/demo-spring-app:VERSION
+Note:
+Similar to OpenFeign
+More aligned with spring terminology
+
+--
+
+### Configuring the client
+```java [1-8|10-13]
+@Bean
+public HttpServiceProxyFactory httpServiceProxyFactory(
+    WebClient.Builder webClientBuilder
+) {
+    WebClient webClient = webClientBuilder.baseUrl("http://localhost:8080")
+        .build();
+    return new HttpServiceProxyFactory(WebClientAdapter.forClient(webClient));
+}
+
+@Bean
+public TodoClient todoClient(HttpServiceProxyFactory httpServiceProxyFactory) {
+    return httpServiceProxyFactory.createClient(TodoClient.class);
+}
 ```
 
----
+--
 
-## Migrating
-Live demonstration
+### Using the client
+```java
+@Autowired
+private TodoClient todoClient;
+
+public void useClient() {
+  todoClient.postTodo("chores", new Todo("Clean the bathroom", false));
+}
+```
 
 ---
 
