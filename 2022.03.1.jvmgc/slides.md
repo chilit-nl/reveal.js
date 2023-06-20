@@ -1,9 +1,4 @@
-<!-- .slide: data-background-image="jfall_intro.png" -->
-
----
-
-## Gargage Collectors <!-- .element: style="margin-bottom: 300px" -->
-Gargabe in... gargabe out.
+## Decoding the secrets of the JVM internals <!-- .element: style="margin-bottom: 300px" -->
 <!-- .slide: data-background-image="pexels-lenin-estrada-2569997.jpg" -->
 
 ---
@@ -27,7 +22,7 @@ Gargabe in... gargabe out.
 ## Agenda
 
 <!-- .slide: class="fragmented-lists" -->
-- JVM
+- JVM Explained
 - Memory management
 - Garbage collection
 - JVM GC timeline
@@ -37,13 +32,78 @@ Gargabe in... gargabe out.
 
 ## JVM
 
+<!-- .slide: class="fragmented-lists" -->
+- What is Java?
+- What is OpenJDK?
+- What is the JVM?
+
+--
+
+### This is Java
+
+![](./HotSpot.drawio.png)
+
+--
+
+### This is the JVM
+
 ![](./hotspotjvm-1.PNG) <!-- .element: height="500" -->
+
+Note:
+- The JVM consists of several components
+- The JVM is an abstraction of a computer
+- Same functionality available everywhere
+
+--
+
+### JVM Interpreter
+
+<!-- .slide: class="fragmented-lists" -->
+- The intepreter is an abstraction of the CPU
+- It convert bytecode to the right CPU instructions
+- Inteprets bytecode instructions one at a time
+
+--
+
+### JIT Compiler
+
+<!-- .slide: class="fragmented-lists" -->
+- Compile multiple bytecode instructions into machine code
+- Perform platform optimizations
+
+--
+
+### JVM Memory
+
+```java [|4-8]
+public static void main(String[] args) {
+    int argumentCount = args.length;
+    String message = String.join(args, " ");
+    if(argumentCount > 0) {
+        System.out.println("Hello, " + message);
+    } else {
+        System.out.println("Hello, world!");
+    }
+}
+```
+
+--
+
+### The memory hierarchy
+
+![](./memory_hierarchy.jpg) <!-- .element: height="500" -->
 
 --
 
 ### JVM Memory
 
 ![](./java-memory-model-3.png)
+
+--
+
+### Stack
+
+![](./stack_of_books.jpg) <!-- .element: height="500" -->
 
 --
 
@@ -74,6 +134,12 @@ int main() {
 - Automatic deallocation
 - No fragmantation
 - Good cache utilization
+
+--
+
+### Heap
+
+![](./library.jpeg) <!-- .element: height="500" -->
 
 --
 
@@ -153,12 +219,31 @@ int main() {
 
 --
 
-### Deferred reference counting
+### Reference counting
 
-- Only count heap -> heap references
-- Intermittedly scan for zero-ref objects
+<!-- .slide: class="fragmented-lists" -->
+- (Slightly) reduced throughput
+- Automatic reference counting
+  - Python
+  - Objective-C & Swift
+- Reference cycles
 
----
+--
+
+### Reference cycles
+
+```java
+class Human {
+    String name;
+    List<Pet> pets;
+}
+
+class Pet {
+    Human owner;
+}
+```
+
+--
 
 ## Garbage collection
 
@@ -166,10 +251,11 @@ A process seperate from the mutator (application code) thats finds and removes *
 
 --
 
-### In outline
+### Lifecycle
 
-- Mutator unchanged during normal operation
-- Halted or changed while active
+1. Mutator allocates new objects
+2. JVM runs out of memory
+3. Mutator pauses while garbage collectors makes room
 
 --
 
@@ -186,17 +272,11 @@ A process seperate from the mutator (application code) thats finds and removes *
 
 ![](./mark.jpg)
 
---
+---
 
-### Serial & Parallel GC
+## Java Garbage Collection
 
-![](./Stop-the-world-garbage-collection.jpg)
-
---
-
-### Compaction
-
-![](./GC-mark-sweep-compact.png)
+Serial, Prallel, Garbage-First (G1), ZGC, Shenandoah
 
 --
 
@@ -212,6 +292,25 @@ A process seperate from the mutator (application code) thats finds and removes *
 
 --
 
+### Serial & Parallel GC
+
+![](./Stop-the-world-garbage-collection.jpg)
+
+--
+
+### Problems with Parallel GC
+
+- Large live set
+- Compaction is slow
+
+--
+
+### Compaction
+
+![](./GC-mark-sweep-compact.png)
+
+--
+
 ### G1GC
 
 ![](./g1gc.png)
@@ -222,7 +321,17 @@ A process seperate from the mutator (application code) thats finds and removes *
 
 --
 
-### Shenandoah
+### ZGC & Shenandoah
+
+- Low pause-time collectors
+- Concurrent evacuation
+  - Achieved by inserting barrier code
+  - Impacts throughput sometimes (0-20%)
+- Not generational (as of JDK 17)
+
+--
+
+### Barriers
 
 ```java
 void example(Foo foo) {
@@ -235,7 +344,7 @@ void example(Foo foo) {
 
 --
 
-### Shenandoah
+### Barriers
 
 ```java
 void example(Foo foo) {
@@ -246,3 +355,98 @@ void example(Foo foo) {
     writeBarrier(b1).x = readBarrier(value); // Write
 }
 ```
+
+---
+
+## Recommendations
+
+What (if anything) should you do?
+
+--
+
+### #1: Use latest java
+
+20-40% improvement in latency and throughput from JDK 8 to 17.
+
+--
+
+### Benchmarks
+
+*Warning!* These benchmarks are extreme use-cases.
+In normal use-cases, there is little to no difference.
+
+--
+
+![](./gc-benchmark.svg) <!-- .element: height="500" -->
+
+Note:
+This is a spring boot benchmark with high allocation rate.  
+Latency is max latency.  
+G1 and Shenandoah similar because of web overhead.  
+This does not represent your application.
+
+--
+
+![](./pause-time-benchmark.svg) <!-- .element: height="500" -->
+
+--
+
+### #2: When to change GC
+
+<!-- .slide: class="fragmented-lists" -->
+- G1 (default) is probably fine
+- Batch process, >1s pause times ok? `-XX:+UseParallelGC`
+- pause times <200ms not good enough? `-XX:+UseZGC` or `-XX:+UseShenandoahGC`
+  - Reacting to high-frequency sensor data
+  - Live feedback (dashboards, trackers, websockets)
+  - Games and game servers
+
+--
+
+### #3: Choosing a heap size
+
+- Leave enough headroom for allocation rate
+- Got reserved memory? `-Xms` = `-Xmx`
+
+--
+
+### #4: Diagnose problems
+
+`-Xlog:gc` or even `Xlog:gc*:gc.log`
+
+--
+
+### Use analysis tools
+
+![](./gceasy.png) <!-- .element: height="500" -->
+
+---
+
+## The future
+
+What's next for the JVM?
+
+--
+
+### Generational ZGC & Snenandoah
+
+- Generational ZGC will be in JDK 21
+  - `-XX:+ZGenerational`
+- GenShen (generational shenandoah) still in preview
+
+--
+
+### JEP: Value Objects
+
+<!-- .slide: class="fragmented-lists" -->
+- Create objects without identity (a == b)
+- Faster field access
+- Better performance in JIT and GC
+- Better cache utilization
+
+---
+
+## Thank you!
+
+Please visit our ChilIT stand. Let's talk about JVM.  
+Try the hot sauce challenge.
