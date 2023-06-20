@@ -59,9 +59,9 @@ Note:
 ### JVM Interpreter
 
 <!-- .slide: class="fragmented-lists" -->
-- The intepreter is an abstraction of the CPU
-- It convert bytecode to the right CPU instructions
-- Inteprets bytecode instructions one at a time
+- The interpreter is an abstraction of the CPU
+- It converts bytecode to the right CPU instructions
+- Interprets bytecode instructions one at a time
 
 --
 
@@ -70,22 +70,6 @@ Note:
 <!-- .slide: class="fragmented-lists" -->
 - Compile multiple bytecode instructions into machine code
 - Perform platform optimizations
-
---
-
-### JVM Memory
-
-```java [|4-8]
-public static void main(String[] args) {
-    int argumentCount = args.length;
-    String message = String.join(args, " ");
-    if(argumentCount > 0) {
-        System.out.println("Hello, " + message);
-    } else {
-        System.out.println("Hello, world!");
-    }
-}
-```
 
 --
 
@@ -123,7 +107,7 @@ void func1(int z) {
 int main() {
   int z = 15; // allocate an integer on the stack in main
   func1(z); // call func1
-  return 0; // after func1 ended, x is not longe allocated
+  return 0; // after func1 ended, x is no longer allocated
 }
 ```
 
@@ -247,7 +231,7 @@ class Pet {
 
 ## Garbage collection
 
-A process seperate from the mutator (application code) thats finds and removes **unreachable** objects
+A process separate from the mutator (application code) thats finds and removes **unreachable** objects
 
 --
 
@@ -276,19 +260,13 @@ A process seperate from the mutator (application code) thats finds and removes *
 
 ## Java Garbage Collection
 
-Serial, Prallel, Garbage-First (G1), ZGC, Shenandoah
+Serial, Parallel, Garbage-First (G1), ZGC, Shenandoah
 
 --
 
 ### Generational GC
 
 ![](./Slide5.png)
-
---
-
-### Remembered set
-
-![](./fig1.jpg)
 
 --
 
@@ -328,19 +306,6 @@ Serial, Prallel, Garbage-First (G1), ZGC, Shenandoah
   - Achieved by inserting barrier code
   - Impacts throughput sometimes (0-20%)
 - Not generational (as of JDK 17)
-
---
-
-### Barriers
-
-```java
-void example(Foo foo) {
-  Bar b1 = foo.bar;             // Read
-  while (..) {
-    Baz baz = b1.baz;           // Read
-    b1.x = makeSomeValue(baz);  // Write
-}
-```
 
 --
 
@@ -428,7 +393,7 @@ What's next for the JVM?
 
 --
 
-### Generational ZGC & Snenandoah
+### Generational ZGC & Shenandoah
 
 - Generational ZGC will be in JDK 21
   - `-XX:+ZGenerational`
