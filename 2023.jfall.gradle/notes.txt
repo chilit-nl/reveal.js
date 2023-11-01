@@ -1,0 +1,59 @@
+- Intro
+  - Programming. Its amazing. We are the creators of our own world. We can make our imagination a reality.
+  - Anything we say or describe, simply happens. Like magic.
+  - Until... it doesn't. And that is usually when we try to compile, run or test our perfectly imperfect code.
+  - The only remedy to this dreadful moment which we encounter ever so often. Is the build tool.
+  - And I. I use gradle. Hopefully after today's talk. you will too.
+- Personal info
+- Who is this talk for
+  - Heard of gradle, never used
+  - Used gradle, now maven
+  - Uding gradle, but not the latest features (or kotlin)
+
+- History of build tools
+  - Shell scipts
+  - Makefiles
+  - The very first build tool.... to be universally hated
+    - NPM
+    - We like to poke fun at javascript
+    - What is the worst thing about npm?
+    - THIS (package.json) is too complicated to understand!
+    - So they have to use "npm install package"
+    - Joking. I love Node.js
+  - Today: Maven & Gradle
+
+- What is gradle
+  - DSL/code over configuration
+  - Groovy & Kotlin
+  - Just in: Kotlin is the default
+
+- Gradle explained
+  - 
+
+- Why kotlin
+
+- Why not maven
+  - Slow to iterate (but stable)
+  - Still useful to know gradle even if you use maven
+- Valid use-cases for gradle
+  - New projects (dont rock the boat)
+  - 
+
+- Why use gradle
+  - If not for
+    - Compact and concise build information
+    - Performance
+    - Ability to extend and set conventions
+    - Advanced (transitive) dependency management
+    - Elephant mascot which is way better than the letter M
+      - Which stands for "Mate why is my build still running its so slow"
+  - Then (high energy, final word)
+    - Because we are not users of graphical interfaces
+    - We are not people who run simple commands
+    - We don't just edit configuration
+    - We are... programmers!
+    - And we will program our builds, so they can have bugs too
+  - Thanks for your intrest please consider leaving a review
+  - Visit our stand
+  
+structuur -?
