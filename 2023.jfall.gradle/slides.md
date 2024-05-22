@@ -1,10 +1,17 @@
-<!-- .slide: data-background-image="Template_01.jpg" -->
+<!-- .slide: data-background-image="Template_02.jpg" -->
 
 ---
 
 ## Gradle + Kotlin DSL <!-- .element: style="margin-bottom: 300px" -->
 Because life's too short for messy builds
 <!-- .slide: data-background-image="pexels-lenin-estrada-2569997.jpg" -->
+
+Note:
+- Programming. Its amazing. We are the creators of our own world. We can make our imagination a reality.
+- Anything we say or describe, simply happens. Like magic.
+- Until... it doesn't. And that is usually when we try to compile, run or test our perfectly imperfect code.
+- The only remedy to this dreadful moment which we encounter ever so often. Is the build tool.
+- And I. I use gradle. Hopefully after today's talk. you will too.
 
 ---
 
@@ -37,7 +44,7 @@ Because life's too short for messy builds
 ## Agenda
 
 <!-- .slide: class="fragmented-lists" -->
-- History of build tools
+- Overview of build tools
 - What is gradle
 - The power of gradle 8
 - Why use gradle + kotlin?
@@ -216,7 +223,7 @@ init - Initializes a new Gradle build.
 wrapper - Generates Gradle wrapper files.
 ```
 
---
+---
 
 ## Gradle CLI
 
@@ -493,6 +500,21 @@ tasks.named<Test>("test") {
 
 --
 
+### Shared build logic
+
+```kt
+// Inside build.gradle.kts
+plugins {
+    `basic.app.java-common-conventions`
+}
+
+dependencies {
+    implementation("org.apache.commons:commons-text")
+}
+```
+
+--
+
 ### Custom tasks
 
 ```kt
@@ -560,7 +582,7 @@ dependencyResolutionManagement {
 }
 
 // In build.gradle.kts
-implementation(libs.bundles.commons-lang3)
+implementation(libs.commons.lang3)
 ```
 
 ---
@@ -624,12 +646,12 @@ Why use gradle?
 - Elephant mascot which is way better than the letter M
 
 Note:
-- If not for
-  - Compact and concise build information
-  - Performance
-  - Ability to extend and set conventions
-  - Advanced (transitive) dependency management
-  - Elephant mascot which is way better than the letter M
+If not for  
+Compact and concise build information  
+Performance  
+Ability to extend and set conventions  
+Advanced (transitive) dependency management  
+Elephant mascot which is way better than the letter M
 
 --
 
@@ -642,14 +664,14 @@ Note:
 - We are... programmers!
 
 Note:
-- Then (high energy, final word)
-  - Because we are not users of graphical interfaces
-  - We are not people who run simple commands
-  - We don't just edit configuration
-  - We are... programmers!
-  - And we will program our builds, so they can have bugs too
-- Thanks for your intrest please consider leaving a review
-- Visit our stand
+Then (high energy, final word)  
+Because we are not users of graphical interfaces  
+We are not people who run simple commands  
+We don't just edit configuration  
+We are... programmers!  
+And we will program our builds, so they can have bugs too  
+Thanks for your intrest please consider leaving a review  
+Visit our stand
 
 --
 
