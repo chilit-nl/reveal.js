@@ -1,29 +1,40 @@
 <!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>reveal.js</title>
 
-  <title>reveal.js</title>
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
 
-  <link rel="stylesheet" href="dist/reset.css">
-  <link rel="stylesheet" href="dist/homepage.css">
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>Slide 1</section>
+				<section>Slide 2</section>
+			</div>
+		</div>
 
-  <!-- Theme used for syntax highlighted code -->
-  <link rel="stylesheet" href="plugin/highlight/monokai.css">
-</head>
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
 
-<body>
-  <ul>
-    <li>An overview of all presentations in reverse chronological order</li>
-    <li><a href="2023.02.15.git">2022-02-15 - Git</a></li>
-    <li><a href="2022.08.17.loadtesting">2022-08-17 - Load testing</a></li>
-    <li><a href="2022.08.03.intellij">2022-08-03 - IntelliJ</a></li>
-    <li><a href="2022.jfall.spring-6">2022-jfall - Spring 6</a></li>
-    <li><a href="2024.jspring.keynote">2024-jspring - Keynote</a></li>
-    <li><a href="2024.jspring.breakout">2024-jspring - Breakout</a></li>
-  </ul>
-</body>
-
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
 </html>
