@@ -40,6 +40,30 @@ $logoStart: 12px;
 // ---------------------------------------------
 
 
+.hljs-meta {
+  color: #a19f26 !important;
+}
+
+.hljs-keyword {
+    color: #d36522 !important;
+}
+
+.hljs-title {
+    color: #56A8F5 !important;
+}
+
+.hljs-type {
+  color: rgb(221, 221, 221) !important;
+}
+
+.hljs-variable {
+    color: #C77DBB !important;
+}
+
+.hljs-comment {
+    color: #5F826B !important;
+}
+
 body:before {
   $logoSize: 60px;
 

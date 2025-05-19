@@ -27,9 +27,9 @@ section.has-light-background, section.has-light-background h1, section.has-light
   --r-heading4-size: 1em;
   --r-code-font: monospace;
   --r-link-color: #c92b28;
-  --r-link-color-dark: #891d1b;
-  --r-link-color-hover: #df615e;
-  --r-selection-background-color: #e88b89;
+  --r-link-color-dark: rgb(170.85, 36.55, 34);
+  --r-link-color-hover: rgb(223.0497925311, 96.846473029, 94.4502074689);
+  --r-selection-background-color: rgb(231.5145228216, 138.7468879668, 136.9854771784);
   --r-selection-color: #fff;
   --r-overlay-element-bg-color: 240, 240, 240;
   --r-overlay-element-fg-color: 0, 0, 0;
@@ -352,6 +352,30 @@ section.has-light-background, section.has-light-background h1, section.has-light
     background-color: var(--r-background-color);
   }
 }
+.hljs-meta {
+  color: #a19f26 !important;
+}
+
+.hljs-keyword {
+  color: #d36522 !important;
+}
+
+.hljs-title {
+  color: #56A8F5 !important;
+}
+
+.hljs-type {
+  color: rgb(221, 221, 221) !important;
+}
+
+.hljs-variable {
+  color: #C77DBB !important;
+}
+
+.hljs-comment {
+  color: #5F826B !important;
+}
+
 body:before {
   content: " ";
   background-image: url(../logo.svg);
