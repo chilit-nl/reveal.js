@@ -45,7 +45,7 @@ $logoStart: 12px;
 }
 
 .hljs-keyword {
-    color: #d36522 !important;
+    color: $linkColor !important;
 }
 
 .hljs-title {
@@ -61,7 +61,11 @@ $logoStart: 12px;
 }
 
 .hljs-comment {
-    color: #5F826B !important;
+    color: #66c437 !important;
+}
+
+.side-image {
+  width: 26%;
 }
 
 body:before {

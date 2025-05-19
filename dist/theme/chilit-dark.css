@@ -357,7 +357,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
 }
 
 .hljs-keyword {
-  color: #d36522 !important;
+  color: #c92b28 !important;
 }
 
 .hljs-title {
@@ -373,7 +373,11 @@ section.has-light-background, section.has-light-background h1, section.has-light
 }
 
 .hljs-comment {
-  color: #5F826B !important;
+  color: #66c437 !important;
+}
+
+.side-image {
+  width: 26%;
 }
 
 body:before {
