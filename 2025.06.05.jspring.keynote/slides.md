@@ -42,9 +42,9 @@
 * Single reason for change (SRP)
 <!-- * Framework dependency shuts down options -->
 
---
+---
 
---
+---
 
 ```java
 package com.example.service;
@@ -65,7 +65,7 @@ public class SimpleService {
 }
 ```
 
---
+---
 
 ```java
 package com.example.service;
@@ -88,7 +88,7 @@ public class SimpleService {
 
 ```
 
---
+---
 
 <img src="maintenance_mode.png" class="stretch" />
 
@@ -96,15 +96,15 @@ public class SimpleService {
 
 # Spring example application
 
---
+---
 
 <img src="old-architecture/without-framework.png" alt="img.png" class="stretch" />
 
---
+---
 
 <img src="old-architecture/with-framework.png" alt="img.png" class="stretch" />
 
---
+---
 
 ```java[|4|10]
 package com.example.service;
@@ -127,7 +127,7 @@ public class SomeService {
 }
 ```
 
---
+---
 
 ```java[|4]
 package com.example.repository;
@@ -153,11 +153,11 @@ public interface SomeRepository extends JpaRepository<SomeEntity, Long> {
 
 ## What is your core domain?
 
---
+---
 
 ## core domain != database tables
 
---
+---
 
 ## core domain == model of reality
 
@@ -168,7 +168,7 @@ public interface SomeRepository extends JpaRepository<SomeEntity, Long> {
 
 <img src="refactored.png" alt="img.png" class="stretch" />
 
---
+---
 
 <div class="stretch" style="display: flex; justify-content: center; align-items: center; width: 100%">
 <div style="flex-grow: 2">
@@ -186,7 +186,7 @@ public record SomeEntity (UUID id, ...) {
 <img src="new-architecture/domain.png" alt="img.png" class="stretch side-image" />
 </div>
 
---
+---
 
 <div class="stretch" style="display: flex; justify-content: center; align-items: center; width: 100%">
 <div style="flex-grow: 2">
@@ -206,7 +206,7 @@ public interface SomeRepository {
     <img src="new-architecture/dai.png" alt="img.png" class="stretch side-image" />
 </div>
 
---
+---
 
 <div class="stretch" style="display: flex; justify-content: center; align-items: center; width: 100%">
 <div style="flex-grow: 2">
@@ -235,7 +235,7 @@ public class SomeService {
     <img src="new-architecture/service.png" alt="img.png" class="stretch side-image" />
 </div>
 
---
+---
 
 <div class="stretch" style="display: flex; justify-content: center; align-items: center; width: 100%">
 <div style="flex-grow: 2">
@@ -257,7 +257,7 @@ public interface SomeJpaRepository
     <img src="new-architecture/jpa.png" alt="img.png" class="stretch side-image" />
 </div>
 
---
+---
 
 <div class="stretch" style="display: flex; justify-content: center; align-items: center; width: 100%">
 <div style="flex-grow: 2">
@@ -281,7 +281,7 @@ public class SomeJpaEntity {
     <img src="new-architecture/database.png" alt="img.png" class="stretch side-image" />
 </div>
 
---
+---
 
 <div class="stretch" style="display: flex; justify-content: center; align-items: center; width: 100%">
 <div style="flex-grow: 2">
@@ -307,7 +307,7 @@ public class SomeRepositoryJpaDao
     <img src="new-architecture/dao.png" alt="img.png" class="stretch side-image" />
 </div>
 
---
+---
 
 <div class="stretch" style="display: flex; justify-content: center; align-items: center; width: 100%">
 <div style="flex-grow: 2">
